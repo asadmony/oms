@@ -44,10 +44,10 @@ class AdminReportController extends Controller
                 }else{
                 }
                 if ($request->sr) {
-                    $query->where('agent_id', $request->sr);
+                    $query->whereIn('agent_id', $request->sr);
                 }
                 if ($request->shop) {
-                    $query->where('source_id', $request->shop);
+                    $query->whereIn('source_id', $request->shop);
                 }
                 if ($request->status) {
                     $query->where('order_status', $request->status);
@@ -81,10 +81,10 @@ class AdminReportController extends Controller
                 }else{
                 }
                 if ($request->sr) {
-                    $query->where('agent_id', $request->sr);
+                    $query->whereIn('agent_id', $request->sr);
                 }
                 if ($request->shop) {
-                    $query->where('source_id', $request->shop);
+                    $query->whereIn('source_id', $request->shop);
                 }
             })->latest()->get();
             
@@ -115,10 +115,10 @@ class AdminReportController extends Controller
                 }else{
                 }
                 if ($request->sr) {
-                    $query->where('agent_id', $request->sr);
+                    $query->whereIn('agent_id', $request->sr);
                 }
                 if ($request->shop) {
-                    $query->where('source_id', $request->shop);
+                    $query->whereIn('source_id', $request->shop);
                 }
             })->latest()->get();
             
@@ -130,7 +130,12 @@ class AdminReportController extends Controller
                 'input' => $request->all(),
             ]);
         }elseif($type == 'product'){
-            $products = EcommerceProduct::whereHas('sales', function ($query) use ($request){
+            $allProducts = EcommerceProduct::where('status', 'published')->get();
+            $products = EcommerceProduct::where('status', 'published')->where(function ($query) use ($request){
+                if ($request->products) {
+                    $query->whereIn('id', $request->products);
+                }
+            })->whereHas('sales', function ($query) use ($request){
                 if ($request->time == 'today') {
                     $query->where('created_at', '<=', now())->where('created_at', '>=', now()->subDays(1));
                 }elseif($request->time == 'yesterday'){
@@ -148,10 +153,10 @@ class AdminReportController extends Controller
                 }else{
                 }
                 if ($request->sr) {
-                    $query->where('agent_id', $request->sr);
+                    $query->whereIn('agent_id', $request->sr);
                 }
                 if ($request->shop) {
-                    $query->where('source_id', $request->shop);
+                    $query->whereIn('source_id', $request->shop);
                 }
             })->latest()->paginate(50)->load('sales', 'returns');
             return view('admin.report.index',[
@@ -159,6 +164,7 @@ class AdminReportController extends Controller
                 'srs' => $srs,
                 'shops' => $shops,
                 'products' => $products,
+                'allProducts' => $allProducts,
                 'input' => $request->all(),
             ]);
         }else{

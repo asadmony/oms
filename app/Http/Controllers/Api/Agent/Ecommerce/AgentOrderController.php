@@ -352,14 +352,14 @@ class AgentOrderController extends Controller
             $orderByAgent = $shipment->orderByAgent;
             $orderForSource = $shipment->orderForSource;
 
-            $orderByAgent->total_sale = $orderByAgent->total_sale+$shipment->shipment_price;
-            $orderByAgent->current_sale = $orderByAgent->current_sale+$shipment->shipment_price;
+            $orderByAgent->total_sale = $orderByAgent->total_sale+$shipment->total_collection_amount;
+            $orderByAgent->current_sale = $orderByAgent->current_sale+$shipment->total_collection_amount;
             $orderByAgent->total_sale_commission = $orderByAgent->total_sale_commission+$totalSrCommission;
             $orderByAgent->current_sale_commission = $orderByAgent->current_sale_commission+$totalSrCommission;
             $orderByAgent->save();
 
-            $orderForSource->total_sale = $orderForSource->total_sale+$shipment->shipment_price;
-            $orderForSource->current_sale = $orderForSource->current_sale+$shipment->shipment_price;
+            $orderForSource->total_sale = $orderForSource->total_sale+$shipment->total_collection_amount;
+            $orderForSource->current_sale = $orderForSource->current_sale+$shipment->total_collection_amount;
             $orderForSource->total_sale_commission = $orderForSource->total_sale_commission+$totalShopCommission;
             $orderForSource->current_sale_commission = $orderForSource->current_sale_commission+$totalShopCommission;
             $orderForSource->save();

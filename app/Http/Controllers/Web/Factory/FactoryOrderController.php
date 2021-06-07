@@ -157,7 +157,7 @@ class FactoryOrderController extends Controller
                 $shipmentItem->total_price = $item->total_price;
                 $shipmentItem->shipment_amount = $shipmentItem->shipment_quantity * $shipmentItem->unit_price;
 
-                $shop_commission = $item->source()->commissionByProduct($item->product_id);
+                $shop_commission = $item->source->commissionByProduct($item->product_id);
                 $shop_payment = round($shipmentItem->shipment_amount - (($shipmentItem->shipment_amount/100)*$shop_commission), 2);
                     $item->collection_amount = $shop_payment;
 

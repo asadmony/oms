@@ -47,8 +47,10 @@ class CreateEcommercePaymentCollectionsTable extends Migration
 
             $table->text('note')->nullable();
 
-            $table->decimal('paid_amount', 13, 2)
-                  ->nullable();
+            $table->decimal('paid_amount', 15, 2)->default(0);
+
+            $table->decimal('sr_commission_amount', 15, 2)
+                  ->default(0);
 
             $table->bigInteger('receivedby_id')
                   ->unsigned()->nullable();

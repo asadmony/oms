@@ -68,6 +68,10 @@ class AgentCollectionController extends Controller
             $collection->cheque_number = $request->type;
             $collection->note = $request->type;
             $collection->paid_amount = $request->paid_amount;
+            
+            $srCommission = round($agent->current_sale_commission / ($agent->current_sale / $request->paid_amount), 2);
+            $collection->sr_commission_amount = $srCommission;
+
             $collection->addedby_id = auth()->user()->id;
             $collection->status = 'pending';
             $collection->save();

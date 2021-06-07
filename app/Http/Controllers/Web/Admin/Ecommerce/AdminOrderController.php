@@ -109,7 +109,7 @@ class AdminOrderController extends Controller
                     $item->total_quantity = $qty;
                     $item->total_price = round($qty*$item->unit_price,2);
                     
-                    $shop_commission = $item->source()->commissionByProduct($item->product_id);
+                    $shop_commission = $item->source->commissionByProduct($item->product_id);
                     $shop_payment = round($item->total_price - (($item->total_price/100)*$shop_commission), 2);
                     $item->collection_amount = $shop_payment;
                     $item->save();

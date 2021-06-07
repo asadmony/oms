@@ -9,6 +9,7 @@
     <td>{{ $collection->agent->name }}</td>
     <td>{{ $collection->source->name }} ({{ $collection->source->mobile }})</td>
     <td>{{ $collection->paid_amount }}</td>
+    <td>{{ $collection->sr_commission_amount }}</td>
     <td>{{ Str::ucfirst($collection->status) }}</td>
 </tr>
 @endforeach

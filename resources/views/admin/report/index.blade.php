@@ -44,6 +44,16 @@ tr.nowrap td{
                         <option value="canceled" @if( isset($input['status']) && $input['status'] == 'canceled') selected @endif>Canceled</option>
                     </select>
                     @endif
+
+                    @if ($type == 'product')
+                    <div class="ml-2">
+                        <select class="form-control select2" name="products[]" id="" multiple="multiple" >
+                            @foreach ($allProducts as $prod)
+                            <option value="{{ $prod->id }}" @if(isset($input['products']) && in_array($prod->id, $input['products'])) selected @endif>{{ $prod->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @endif
                 </div>
                 <div class="col-md-3">
                     <div class="input-group m-2">
@@ -58,19 +68,19 @@ tr.nowrap td{
                 <div class="col-md-4">
                     <div class="input-group m-2">
                         <label class="col-sm-3" for="">SR: </label>
-                        <select class="form-control col-sm-9 select2" name="sr" id="">
+                        <select class="form-control col-sm-9 select2" name="sr[]" id=""  multiple="multiple">
                             <option value="">Select SR</option>
                             @foreach ($srs as $sr)
-                            <option value="{{ $sr->id }}" @if( isset($input['sr']) && $input['sr'] == $sr->id) selected @endif >{{ $sr->name }} ({{ $sr->user->mobile }})</option>
+                            <option value="{{ $sr->id }}" @if( isset($input['sr']) &&  in_array($sr->id, $input['sr'])) selected @endif >{{ $sr->name }} ({{ $sr->user->mobile }})</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="input-group m-2">
                         <label class="col-sm-3" for="">Shop: </label>
-                        <select class="form-control col-sm-9 select2" name="shop" id="">
+                        <select class="form-control col-sm-9 select2" name="shop[]" id=""  multiple="multiple">
                             <option value="">Select Shop</option>
                             @foreach ($shops as $shop)
-                            <option value="{{ $shop->id }}"  @if( isset($input['shop']) && $input['shop'] == $shop->id) selected @endif>{{ $shop->name }}</option>
+                            <option value="{{ $shop->id }}"  @if( isset($input['shop']) && in_array($shop->id, $input['shop'])) selected @endif>{{ $shop->name }}</option>
                             @endforeach
                         </select>
                     </div>
