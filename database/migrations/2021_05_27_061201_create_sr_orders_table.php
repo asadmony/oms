@@ -70,7 +70,8 @@ class CreateSrOrdersTable extends Migration
             //unpaid, partial, paid
 
             $table->decimal('total_quantity',10,2)->default(0);
-            $table->decimal('total_price',10,2)->default(0);
+            $table->decimal('total_price',15,2)->default(0);
+            $table->decimal('total_collection_amount',15,2)->default(0);
             $table->decimal('total_weight',10,2)->default(0);
             $table->decimal('total_paid',10,2)->default(0);
             $table->decimal('total_due',10,2)->default(0);

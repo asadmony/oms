@@ -24,21 +24,25 @@
 import eventBus from './../../../../../../event-bus'
 export default {
     props: [
+        'agent',
         'product',
         'index',
         'tab',
+        'shop',
     ],
     data() {
         return {
             quantity: 1,
             price: 0,
             error: [],
+            shopAmount: 0,
         }
     },
     watch: {
         
     },
     created() {
+        this.getShopAmount()
         this.quantity = this.product.min_order_quantity
         this.price = parseFloat(this.product.sale_price*this.product.min_order_quantity)
     },
@@ -60,8 +64,15 @@ export default {
         },
         calculatedPrice(){
             this.$emit('upQuanity', this.quantity)
-            return parseFloat(this.product.sale_price*this.quantity).toFixed(2)
+            return parseFloat(this.shopAmount*this.quantity).toFixed(2)
         },
+        getShopAmount(){
+            axios.get(window.location.origin+`/api/agent/${this.agent}/ecommerce/shop/${this.shop}/product/${this.product.id}/amount`).then(res=>{
+                if (res.status == 200) {
+                    this.shopAmount = res.data
+                }
+            });
+        }
     },
 }
 </script>

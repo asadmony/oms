@@ -99,18 +99,30 @@ class AdminOrderController extends Controller
         ]);
 
         $req = $request->all();
-
+        
+        $price = 0;
+        $collection  = 0;
         if ($order->order_status == 'pending') {
             foreach ($order->items as $item) {
                 $qty = $req['order_qty_'.$item->id];
                 if ($qty && $qty > 0) {
                     $item->total_quantity = $qty;
                     $item->total_price = round($qty*$item->unit_price,2);
+                    
+                    $shop_commission = $item->source()->commissionByProduct($item->product_id);
+                    $shop_payment = round($item->total_price - (($item->total_price/100)*$shop_commission), 2);
+                    $item->collection_amount = $shop_payment;
                     $item->save();
+
+                    $price = $price+$item->total_price;
+                    $collection = $collection+$item->collection_amount;
                 }else{
                     $item->delete();
                 }
             }
+            $order->total_price = $price;
+            $order->total_collection_amount = $collection;
+            $order->save();
         }
 
         $order->order_status = $request->order_status;

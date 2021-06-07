@@ -46,10 +46,12 @@ class EcommerceSource extends Model
     {
         return $this->hasMany(EcommerceOrder::class, 'source_id');
     }
+    
     public function collections()
     {
         return $this->hasMany(EcommercePaymentCollection::class, 'source_id');
     }
+
     public function returns()
     {
         return $this->hasMany(ShipmentReturn::class, 'source_id');

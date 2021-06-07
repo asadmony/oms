@@ -12,7 +12,7 @@
     </div> -->
         <div class="border-bottom" v-for="(product, index) in products" :key="index">
             <ecom-order-selected-product-item :product="product" :index="index" :key="product.id" @removeItem="removeItem($event)"
-            :tab="tab" @upQuanity="quantity($event, index)" @minusPrice="minusPrice($event)">
+            :tab="tab" :agent="agent" :shop="shop" @upQuanity="quantity($event, index)" @minusPrice="minusPrice($event)">
             </ecom-order-selected-product-item>
         </div>
         <div>

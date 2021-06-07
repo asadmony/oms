@@ -57,12 +57,15 @@
             {{-- @include('layouts.header') --}}
 
             <main class="">
-                <div class="card">
-                    <div class="card-header w3-blue text-8 px-5">
+                <div class="card p-0 m-0">
+                    <div class="card-header text-8 px-5" style="background-color: #283291">
                         <a class="text-white" href="/">
-							<img class="" style="max-width: 80px; max-height:80px" src="{{ asset('img/dhpl.jpg') }}" alt="">
+							<img class="w3-round-large" style="max-width: 80px; max-height:80px" src="{{ asset('img/dhpl.jpg') }}" alt="">
 						</a>
                     </div>
+					<div class=" py-4" style="background-color: #38B749">
+
+					</div>
                 @yield('content')
                 </div>
             </main>

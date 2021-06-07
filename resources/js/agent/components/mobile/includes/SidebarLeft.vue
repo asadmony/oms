@@ -81,9 +81,9 @@ export default {
 		getSrInfo(){
 			var path = window.location.pathname
 			var splitPath = path.split("/")
-			axios.get(window.location.origin+`/api/agent/${splitPath[2]}/info`).then(res => {
+			axios.get(window.location.origin+`/api/agent/${splitPath[2]}/dashboard/info`).then(res => {
 				if (res.status == 200) {
-					this.sr = res.data
+					this.sr = res.data.agent
 				}
 			});
 		}

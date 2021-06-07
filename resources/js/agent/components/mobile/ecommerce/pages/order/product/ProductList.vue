@@ -13,10 +13,11 @@
             <td>Name</td>
             <td>Min Qty</td>
             <td>Rate</td>
+            <td>Order Amount</td>
             </tr>
             </thead>
             <tbody>
-            <ecom-order-create-product-item v-for="(product, index) in products"  :key="product.id" :product="product" v-on:selectProduct="selectProduct($event)" v-on:removeProduct="removeProduct($event)"
+            <ecom-order-create-product-item v-for="(product) in products"  :key="product.id" :product="product" :agent="agent" :shop="shop" v-on:selectProduct="selectProduct($event)" v-on:removeProduct="removeProduct($event)"
             :tab="tab">
             </ecom-order-create-product-item>
             </tbody>

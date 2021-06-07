@@ -30,6 +30,20 @@ tr.nowrap td{
                         <option value="last_month" @if( isset($input['time']) && $input['time'] == 'last_month') selected @endif>Last Month</option>
                         {{-- <option value="last_year" @if( isset($input['time']) && $input['time'] == 'last_year') selected @endif>Last Year</option> --}}
                     </select>
+                    @if ($type == 'order')
+                    <select class="form-control m-2" name="status" id="">
+                        <option value="" selected disabled>Order Status</option>
+                        <option value="">All</option>
+                        <option value="pending" @if( isset($input['status']) && $input['status'] == 'pending') selected @endif>Pending</option>
+                        <option value="confirmed" @if( isset($input['status']) && $input['status'] == 'confirmed') selected @endif>Confirmed</option>
+                        <option value="processing" @if( isset($input['status']) && $input['status'] == 'processing') selected @endif>Processing</option>
+                        <option value="ready_to_ship" @if( isset($input['status']) && $input['status'] == 'ready_to_ship') selected @endif>Ready to ship</option>
+                        <option value="shipped" @if( isset($input['status']) && $input['status'] == 'shipped') selected @endif>Shipped</option>
+                        <option value="collected" @if( isset($input['status']) && $input['status'] == 'collected') selected @endif>Collected</option>
+                        <option value="delivered" @if( isset($input['status']) && $input['status'] == 'delivered') selected @endif>Delivered</option>
+                        <option value="canceled" @if( isset($input['status']) && $input['status'] == 'canceled') selected @endif>Canceled</option>
+                    </select>
+                    @endif
                 </div>
                 <div class="col-md-3">
                     <div class="input-group m-2">
@@ -90,6 +104,8 @@ tr.nowrap td{
             @include('admin.report.collectionReport')
         @elseif($type == 'return')
             @include('admin.report.returnReport')
+        @elseif($type == 'product')
+            @include('admin.report.productSalesReport')
         @endif
     </div>
 </div>

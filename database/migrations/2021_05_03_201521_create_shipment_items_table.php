@@ -83,6 +83,7 @@ class CreateShipmentItemsTable extends Migration
             $table->decimal('total_price',13,2)->default(0); //p * q
             
             $table->decimal('shipment_amount',13,2)->default(0); //p * q
+            $table->decimal('collection_amount',13,2)->default(0); //p * q
 
             $table->decimal('unit_discount', 10,2)->default(0);
             //by deal,coupon,promotion,campaign and other discounts

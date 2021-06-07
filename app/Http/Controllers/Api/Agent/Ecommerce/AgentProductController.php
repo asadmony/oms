@@ -388,6 +388,12 @@ class AgentProductController extends Controller
         return response()->json($products, 200);
     }
 
+    public function getProductAmountByShop(Agent $agent, EcommerceSource $source, EcommerceProduct $product)
+    {
+        $data = $product->shopAmount($source->id);
+        return response()->json($data, 200);
+    }
+
     public function getSalesList(Agent $agent, SalesList $salesList)
     {
         $data = $salesList->where('addedby_id', null)->orWhere('addedby_id', auth()->user()->id)->get();

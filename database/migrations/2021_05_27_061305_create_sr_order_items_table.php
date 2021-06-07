@@ -80,6 +80,7 @@ class CreateSrOrderItemsTable extends Migration
 
             $table->decimal('unit_price',13,2)->default(0); //per unit
             $table->decimal('total_price',13,2)->default(0); //p * q
+            $table->decimal('collection_amount',15,2)->default(0); 
 
             $table->decimal('unit_discount', 10,2)->default(0);
             //by deal,coupon,promotion,campaign and other discounts

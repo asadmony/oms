@@ -3,6 +3,8 @@
 namespace App\Models\Ecommerce;
 
 use App\Models\Role\Agent;
+use App\Models\SaleCommission;
+use App\Models\ShipmentReturnItem;
 use App\Models\User;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -125,4 +127,24 @@ class EcommerceProduct extends Model
         return $this->hasMany(EcommerceOrderItem::class, 'product_id');
     }
 
+    public function shopAmount($sourceId)
+    {
+        $source = EcommerceSource::find($sourceId);
+        $salePrice = $this->sale_price;
+        $com = $source->commissionByProduct($this->id);
+        $shopAmount = $salePrice - (($salePrice/100)*$com );
+        return $shopAmount;
+    }
+
+    
+    public function sales()
+    {
+        return $this->hasMany(SaleCommission::class, 'product_id');
+    }
+
+
+    public function returns()
+    {
+        return $this->hasMany(ShipmentReturnItem::class, 'product_id');
+    }
 }

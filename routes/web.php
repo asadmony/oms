@@ -84,6 +84,7 @@ Route::prefix('api/agent')->namespace('\App\Http\Controllers\Api\Agent')->group(
         Route::post('/order/{order}/shipment/{shipment}/return', 'Ecommerce\AgentOrderController@orderShipmentReturnPost');
         Route::post('/order/place', 'Ecommerce\AgentOrderController@orderPlace');
         Route::get('/shop/{source}/products/published', 'Ecommerce\AgentProductController@getPublishedProducts');
+        Route::get('/shop/{source}/product/{product}/amount', 'Ecommerce\AgentProductController@getProductAmountByShop');
         Route::get('product/{product}/details', 'Ecommerce\AgentProductController@productDetails');
         Route::post('product/feature-image/upload',  'Ecommerce\AgentProductController@productFeatureImageChange');
         Route::post('product-info/save',  'Ecommerce\AgentProductController@store');

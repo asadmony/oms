@@ -32,7 +32,7 @@
                </li>
           <li class="nav-item has-treeview {{ session('lsbm') == 'dashboard' ? ' menu-open ' : '' }}">
             <a href="#" class="nav-link ">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fas fa-tachometer-alt w3-text-blue"></i>
               <p>
                 Dashboard
                 <i class="right fas fa-angle-left"></i>
@@ -52,7 +52,7 @@
 
           <li class="nav-item has-treeview {{ session('lsbm') == 'roles' ? 'menu-open' : '' }}">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-user-circle"></i>
+              <i class="nav-icon fas fa-user-circle w3-text-blue"></i>
               <p>
                 Role
                 <i class="right fas fa-angle-left"></i>
@@ -117,7 +117,7 @@
 
           <li class="nav-item has-treeview {{ session('lsbm') == 'ecommerce' ? 'menu-open' : '' }}">
             <a href="#" class="nav-link ">
-              <i class="nav-icon fas fa-inbox"></i>
+              <i class="nav-icon fas fa-inbox w3-text-blue"></i>
               <p>
                 Product Management
                 <i class="right fas fa-angle-left"></i>
@@ -182,7 +182,7 @@
 
           <li class="nav-item has-treeview {{ session('lsbm') == 'orders' ? ' menu-open ' : '' }}">
             <a href="#" class="nav-link ">
-              <i class="nav-icon fas fa-shopping-bag"></i>
+              <i class="nav-icon fas fa-shopping-bag w3-text-blue"></i>
               <p>
                 Order Management
                 <i class="right fas fa-angle-left"></i>
@@ -202,7 +202,7 @@
 
           <li class="nav-item has-treeview {{ session('lsbm') == 'shops' ? ' menu-open ' : '' }}">
             <a href="#" class="nav-link ">
-              <i class="nav-icon fas fa-store-alt"></i>
+              <i class="nav-icon fas fa-store-alt w3-text-blue"></i>
               <p>
                 Shop Management
                 <i class="right fas fa-angle-left"></i>
@@ -222,7 +222,7 @@
 
           <li class="nav-item has-treeview {{ session('lsbm') == 'collections' ? ' menu-open ' : '' }}">
             <a href="#" class="nav-link ">
-              <i class="nav-icon fas fa-money-bill-wave"></i>
+              <i class="nav-icon fas fa-money-bill-wave w3-text-blue"></i>
               <p>
                 Collection Management
                 <i class="right fas fa-angle-left"></i>
@@ -242,7 +242,7 @@
 
           <li class="nav-item has-treeview {{ session('lsbm') == 'returns' ? ' menu-open ' : '' }}">
             <a href="#" class="nav-link ">
-              <i class="nav-icon fas fa-exchange-alt"></i>
+              <i class="nav-icon fas fa-exchange-alt w3-text-blue"></i>
               <p>
                 Return Management
                 <i class="right fas fa-angle-left"></i>
@@ -262,7 +262,7 @@
 
           <li class="nav-item has-treeview {{ session('lsbm') == 'commissions' ? ' menu-open ' : '' }}">
             <a href="#" class="nav-link ">
-              <i class="nav-icon fas fa-coins"></i>
+              <i class="nav-icon fas fa-coins w3-text-blue"></i>
               <p>
                 Commissions
                 <i class="right fas fa-angle-left"></i>
@@ -281,7 +281,7 @@
           </li>
           <li class="nav-item has-treeview {{ session('lsbm') == 'report' ? ' menu-open ' : '' }}">
             <a href="#" class="nav-link ">
-              <i class="nav-icon fas fa-print"></i>
+              <i class="nav-icon fas fa-print w3-text-blue"></i>
               <p>
                 Report
                 <i class="right fas fa-angle-left"></i>
@@ -313,13 +313,19 @@
                   Return
                 </a>
               </li>
+              <li class="nav-item ">
+                <a href="{{ route('admin.report', 'product') }}" class="nav-link {{ session('lsbsm') == 'product' ? ' active ' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  Product Sales Report
+                </a>
+              </li>
 
             </ul>
           </li>
 
           <li class="nav-item has-treeview {{ session('lsbm') == 'users' ? ' menu-open ' : '' }}">
             <a href="#" class="nav-link ">
-              <i class="nav-icon fas fa-users"></i>
+              <i class="nav-icon fas fa-users w3-text-blue"></i>
               <p>
                 Users
                 <i class="right fas fa-angle-left"></i>

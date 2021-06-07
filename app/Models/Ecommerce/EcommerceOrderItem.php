@@ -28,4 +28,9 @@ class EcommerceOrderItem extends Model
     {
         return $this->hasMany(ShipmentItem::class, 'order_item_id');
     }
+    
+    public function source()
+    {
+        return $this->belongsTo(EcommerceSource::class, 'seller_source_id');
+    }
 }

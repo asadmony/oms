@@ -127,6 +127,7 @@ class FactoryOrderController extends Controller
         $shipment->total_price  = $order->total_price;
         $shipment->save();
         $totalShipmentPrice = 0;
+        $collection = 0;
         foreach ($order->items as $item) {
             $key = 'process_qty_'.$item->id;
             if (isset($request[$key]) || !empty($request[$key] || $request[$key] > 0 )) {
@@ -155,16 +156,24 @@ class FactoryOrderController extends Controller
                 $shipmentItem->processing_at = $order->processing_at;
                 $shipmentItem->total_price = $item->total_price;
                 $shipmentItem->shipment_amount = $shipmentItem->shipment_quantity * $shipmentItem->unit_price;
+
+                $shop_commission = $item->source()->commissionByProduct($item->product_id);
+                $shop_payment = round($shipmentItem->shipment_amount - (($shipmentItem->shipment_amount/100)*$shop_commission), 2);
+                    $item->collection_amount = $shop_payment;
+
+                $shipmentItem->collection_amount = $shop_payment;
                 $shipmentItem->save();
                 
                 $item->total_shipped_quantity = $item->total_shipped_quantity+$shipmentItem->shipment_quantity;
                 $item->save();
 
                 $totalShipmentPrice = $totalShipmentPrice + $shipmentItem->shipment_amount;
+                $collection = $collection + $shipmentItem->collection_amount;
             }
 
         }
         $shipment->shipment_price  = $totalShipmentPrice;
+        $shipment->total_collection_amount  = $collection;
         $shipment->save();
         
 

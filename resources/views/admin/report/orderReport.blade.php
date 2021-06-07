@@ -21,11 +21,11 @@
                     <td>{{ now()->parse($order->pending_at)->format('d-M-Y h:m A') }}</td>
                     <td class="text-center">{{ $order->items->count() }}</td>
                     <td>
-                        &#2547; {{ $order->total_price }}  
+                        &#2547; {{ $order->total_collection_amount }}  
                     </td>
                     <td>
                         @php
-                            $shipmentAmount = $order->shipments->sum('shipment_price');
+                            $shipmentAmount = $order->shipments->sum('collection_amount');
                         @endphp
                         &#2547; {{ $shipmentAmount }}  
                     </td>
@@ -42,7 +42,7 @@
                     </td>
                 </tr>
                 @php
-                    $totalAmount = $totalAmount + $order->total_price;
+                    $totalAmount = $totalAmount + $order->total_collection_amount;
                     $totalShipmentAmount = $totalShipmentAmount + $shipmentAmount;
                 @endphp
             @endforeach

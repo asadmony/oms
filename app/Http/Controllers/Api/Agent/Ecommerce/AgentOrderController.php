@@ -132,6 +132,7 @@ class AgentOrderController extends Controller
         $srOrder->save();
 
         $price = 0.00;
+        $collection = 0.00;
 
         foreach ($request->products as $product) {
             $prod = EcommerceProduct::find($product["id"]);
@@ -158,7 +159,14 @@ class AgentOrderController extends Controller
             $orderItem->district_id = $srOrder->district_id ?? null;
             $orderItem->upazila_id = $srOrder->upazila_id ?? null;
             $orderItem->market_id = $srOrder->market_id ?? null;
+
+            $shop_commission = $source->commissionByProduct($prod->id);
+            $shop_payment = round($orderItem->total_price - (($orderItem->total_price/100)*$shop_commission), 2);
+
+            $orderItem->collection_amount = $shop_payment;
             $orderItem->save();
+
+
 
             $srOrderItem = new SrOrderItem;
             $srOrderItem->sr_order_id = $srOrder->id;
@@ -168,6 +176,7 @@ class AgentOrderController extends Controller
             $srOrderItem->total_quantity = $orderItem->total_quantity;
             $srOrderItem->unit_price = $orderItem->unit_price;
             $srOrderItem->total_price = $orderItem->total_price;
+            $srOrderItem->collection_amount = $orderItem->collection_amount;
             $srOrderItem->seller_source_id = $orderItem->seller_source_id;
             $srOrderItem->buyer_source_id = $orderItem->buyer_source_id;
             $srOrderItem->depo_id = $orderItem->depo_id;
@@ -179,13 +188,17 @@ class AgentOrderController extends Controller
             $srOrderItem->upazila_id = $orderItem->upazila_id;
             $srOrderItem->market_id = $orderItem->market_id;
             $srOrderItem->save();
-
+            
             $price = $price+$itemPrice;
+            $collection = $collection+$orderItem->collection_amount;
         }
+
         $ecoOrder->total_price = $price;
+        $ecoOrder->total_collection_amount = $collection;
         $ecoOrder->save();
         
         $srOrder->total_price = $ecoOrder->total_price;
+        $srOrder->total_collection_amount = $ecoOrder->total_collection_amount;
         $srOrder->save();
 
         return response()->json($ecoOrder, 200);
@@ -315,15 +328,18 @@ class AgentOrderController extends Controller
                 $commission->agent_id       = $item->agent_id;
                 $commission->source_id      = $item->seller_source_id;
                 $commission->total_price    = $item->shipment_amount;
+                $commission->collection_amount    = $item->collection_amount;
                 $commission->product_id      = $item->product_id;
                 $commission->delivered_quantity = $item->shipment_quantity;
 
-                $commission->sr_commission = $item->agent->commissionByProduct($item->product_id);
-                $commission->sr_monthly_target = $item->agent->monthly_target;
-                $commission->sr_amount = round(($commission->total_price/100)*$commission->sr_commission, 2);
+                
                 $commission->shop_commission = $item->source->commissionByProduct($item->product_id);
                 $commission->shop_monthly_target = $item->source->monthly_target;
                 $commission->shop_amount = round(($commission->total_price/100)*$commission->shop_commission, 2);
+
+                $commission->sr_commission = $item->agent->commissionByProduct($item->product_id);
+                $commission->sr_monthly_target = $item->agent->monthly_target;
+                $commission->sr_amount = round((($commission->total_price-$commission->shop_amount)/100)*$commission->sr_commission, 2);
                 $commission->system_balance = $commission->total_price - ($commission->sr_amount+$commission->shop_amount);
                 
                 $commission->tr_date = now();

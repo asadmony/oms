@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Ecommerce\EcommerceOrder;
 use App\Models\Ecommerce\EcommercePaymentCollection;
+use App\Models\Ecommerce\EcommerceProduct;
 use App\Models\Ecommerce\EcommerceSource;
 use App\Models\Role\Agent;
 use App\Models\SaleCommission;
@@ -47,6 +48,9 @@ class AdminReportController extends Controller
                 }
                 if ($request->shop) {
                     $query->where('source_id', $request->shop);
+                }
+                if ($request->status) {
+                    $query->where('order_status', $request->status);
                 }
             })->latest()->get();
 
@@ -123,6 +127,38 @@ class AdminReportController extends Controller
                 'srs' => $srs,
                 'shops' => $shops,
                 'returns' => $returns,
+                'input' => $request->all(),
+            ]);
+        }elseif($type == 'product'){
+            $products = EcommerceProduct::whereHas('sales', function ($query) use ($request){
+                if ($request->time == 'today') {
+                    $query->where('created_at', '<=', now())->where('created_at', '>=', now()->subDays(1));
+                }elseif($request->time == 'yesterday'){
+                    $query->where('created_at', '>=', now()->subDays(1));
+                }elseif($request->time == 'last_7_days'){
+                    $query->where('created_at', '>=', now()->subDays(7));
+                }elseif($request->time == 'last_month'){
+                    $query->where('created_at', '>=', now()->subDays(30));
+                }elseif ($request->from && $request->to) {
+                    $query->where('created_at', '<=', now()->parse($request->to))->where('created_at', '>=', now()->parse($request->from));
+                }elseif($request->from){
+                    $query->where('created_at', '>=', now()->parse($request->from));
+                }elseif($request->to){
+                    $query->where('created_at', '<=', now()->parse($request->to));
+                }else{
+                }
+                if ($request->sr) {
+                    $query->where('agent_id', $request->sr);
+                }
+                if ($request->shop) {
+                    $query->where('source_id', $request->shop);
+                }
+            })->latest()->paginate(50)->load('sales', 'returns');
+            return view('admin.report.index',[
+                'type' => $type,
+                'srs' => $srs,
+                'shops' => $shops,
+                'products' => $products,
                 'input' => $request->all(),
             ]);
         }else{

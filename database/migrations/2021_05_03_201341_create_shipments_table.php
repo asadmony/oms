@@ -72,6 +72,7 @@ class CreateShipmentsTable extends Migration
             $table->decimal('total_quantity',10,2)->default(0);
             $table->decimal('total_price',10,2)->default(0);
             $table->decimal('shipment_price',10,2)->default(0);
+            $table->decimal('total_collection_amount',10,2)->default(0);
             $table->decimal('total_weight',10,2)->default(0);
             $table->decimal('total_paid',10,2)->default(0);
             $table->decimal('total_due',10,2)->default(0);

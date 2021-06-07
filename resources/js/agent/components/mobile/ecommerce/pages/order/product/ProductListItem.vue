@@ -18,6 +18,9 @@
                 <td >
                     &#2547; {{ product.sale_price }}
                 </td>
+                <td >
+                    &#2547; {{ shopAmount }}
+                </td>
         </tr>
 </template>
 <style scoped>
@@ -33,10 +36,13 @@ export default {
     props: [
         'product',
         'tab',
+        'shop',
+        'agent',
     ],
     data() {
         return {
             checked: false,
+            shopAmount: 0,
         }
     },
     mounted(){
@@ -47,7 +53,7 @@ export default {
         })
     },
     created() {
-
+        this.getShopAmount()
     },
     methods: {
         selectThisProduct(){
@@ -57,6 +63,13 @@ export default {
             }else{
                 this.$emit('removeProduct',this.product)
             }
+        },
+        getShopAmount(){
+            axios.get(window.location.origin+`/api/agent/${this.agent}/ecommerce/shop/${this.shop}/product/${this.product.id}/amount`).then(res=>{
+                if (res.status == 200) {
+                    this.shopAmount = res.data
+                }
+            });
         }
     },
 }
