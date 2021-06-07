@@ -1,0 +1,208 @@
+<?php
+
+namespace App\Http\Controllers\Web\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\Ecommerce\EcommerceOrder;
+use App\Models\Ecommerce\EcommercePaymentCollection;
+use App\Models\Ecommerce\EcommerceSource;
+use App\Models\Role\Agent;
+use App\Models\SaleCommission;
+use App\Models\ShipmentReturn;
+use Illuminate\Http\Request;
+
+class AdminReportController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index($type, Request $request)
+    {
+        menuSubmenu('report', $type);
+        $srs = Agent::all();
+        $shops = EcommerceSource::all();
+        if($type == 'order'){
+            $orders = EcommerceOrder::where(function ($query) use ($request)
+            {
+                if ($request->time == 'today') {
+                    $query->where('pending_at', '<=', now())->where('pending_at', '>=', now()->subDays(1));
+                }elseif($request->time == 'yesterday'){
+                    $query->where('pending_at', '>=', now()->subDays(1));
+                }elseif($request->time == 'last_7_days'){
+                    $query->where('pending_at', '>=', now()->subDays(7));
+                }elseif($request->time == 'last_month'){
+                    $query->where('pending_at', '>=', now()->subDays(30));
+                }elseif ($request->from && $request->to) {
+                    $query->where('pending_at', '<=', now()->parse($request->to))->where('pending_at', '>=', now()->parse($request->from));
+                }elseif($request->from){
+                    $query->where('pending_at', '>=', now()->parse($request->from));
+                }elseif($request->to){
+                    $query->where('pending_at', '<=', now()->parse($request->to));
+                }else{
+                }
+                if ($request->sr) {
+                    $query->where('agent_id', $request->sr);
+                }
+                if ($request->shop) {
+                    $query->where('source_id', $request->shop);
+                }
+            })->latest()->get();
+
+            return view('admin.report.index',[
+                'type' => $type,
+                'srs' => $srs,
+                'shops' => $shops,
+                'orders' => $orders,
+                'input' => $request->all(),
+            ]);
+        }elseif($type == 'collection'){
+            $collections = EcommercePaymentCollection::where(function ($query) use ($request)
+            {
+                if ($request->time == 'today') {
+                    $query->where('trans_date', '<=', now())->where('trans_date', '>=', now()->subDays(1));
+                }elseif($request->time == 'yesterday'){
+                    $query->where('trans_date', '>=', now()->subDays(1));
+                }elseif($request->time == 'last_7_days'){
+                    $query->where('trans_date', '>=', now()->subDays(7));
+                }elseif($request->time == 'last_month'){
+                    $query->where('trans_date', '>=', now()->subDays(30));
+                }elseif ($request->from && $request->to) {
+                    $query->where('trans_date', '<=', now()->parse($request->to))->where('trans_date', '>=', now()->parse($request->from));
+                }elseif($request->from){
+                    $query->where('trans_date', '>=', now()->parse($request->from));
+                }elseif($request->to){
+                    $query->where('trans_date', '<=', now()->parse($request->to));
+                }else{
+                }
+                if ($request->sr) {
+                    $query->where('agent_id', $request->sr);
+                }
+                if ($request->shop) {
+                    $query->where('source_id', $request->shop);
+                }
+            })->latest()->get();
+            
+            return view('admin.report.index',[
+                'type' => $type,
+                'srs' => $srs,
+                'shops' => $shops,
+                'collections' => $collections,
+                'input' => $request->all(),
+            ]);
+        }elseif($type == 'return'){
+            $returns = ShipmentReturn::where(function ($query) use ($request)
+            {
+                if ($request->time == 'today') {
+                    $query->where('return_at', '<=', now())->where('return_at', '>=', now()->subDays(1));
+                }elseif($request->time == 'yesterday'){
+                    $query->where('return_at', '>=', now()->subDays(1));
+                }elseif($request->time == 'last_7_days'){
+                    $query->where('return_at', '>=', now()->subDays(7));
+                }elseif($request->time == 'last_month'){
+                    $query->where('return_at', '>=', now()->subDays(30));
+                }elseif ($request->from && $request->to) {
+                    $query->where('return_at', '<=', now()->parse($request->to))->where('return_at', '>=', now()->parse($request->from));
+                }elseif($request->from){
+                    $query->where('return_at', '>=', now()->parse($request->from));
+                }elseif($request->to){
+                    $query->where('return_at', '<=', now()->parse($request->to));
+                }else{
+                }
+                if ($request->sr) {
+                    $query->where('agent_id', $request->sr);
+                }
+                if ($request->shop) {
+                    $query->where('source_id', $request->shop);
+                }
+            })->latest()->get();
+            
+            return view('admin.report.index',[
+                'type' => $type,
+                'srs' => $srs,
+                'shops' => $shops,
+                'returns' => $returns,
+                'input' => $request->all(),
+            ]);
+        }else{
+            return redirect()->back();
+        }
+
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+
+    public function commissionList(SaleCommission $com)
+    {
+        menuSubmenu('commissions', 'all');
+        $commissions = $com->latest()->paginate(50);
+        return view('admin.ecommerce.commission.index', [
+            'commissions' => $commissions,
+        ]);
+    }
+}
