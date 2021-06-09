@@ -8,6 +8,8 @@ use App\Models\Ecommerce\EcommerceProduct;
 use App\Models\Ecommerce\EcommerceSource;
 use App\Models\ShipmentReturn;
 use App\Models\SrCommission;
+use App\Models\SrLocation;
+use App\Models\SrSalary;
 use App\Models\User;
 use DB;
 use Auth;
@@ -123,5 +125,18 @@ class Agent extends Model
     {
         return $this->hasMany(ShipmentReturn::class, 'agent_id');
     }
+
+    
+    public function srLocations()
+    {
+        return $this->hasMany(SrLocation::class, 'agent_id');
+    }
+    
+    public function salaries()
+    {
+        return $this->hasMany(SrSalary::class, 'agent_id');
+    }
+
+
 
 }

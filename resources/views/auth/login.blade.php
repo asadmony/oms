@@ -83,7 +83,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group col-lg-6">
-                                            <input type="submit" value="Login" class="btn btn-primary float-right" data-loading-text="Loading...">
+                                            <input type="submit" value="Login" class="btn btn-primary- w3-orange float-right" data-loading-text="Loading...">
                                         </div>
                                     </div>
                                 </form>

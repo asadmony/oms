@@ -21,11 +21,13 @@ import EcomOrderDetails from './components/mobile/ecommerce/pages/order/OrderDet
 import OrderShipmentReturn from './components/mobile/ecommerce/pages/order/shipment/ShipmentReturn'
 import EcomPaymentCollectionCreate from './components/mobile/ecommerce/pages/collection/NewCollection'
 import EcomPaymentCollectionList from './components/mobile/ecommerce/pages/collection/CollectionList'
+import AgentSalaryStatement from './components/mobile/ecommerce/pages/salary/SalaryList'
 import EcomSourceCreate from './components/mobile/ecommerce/pages/source/SourceCreate'
 import EcomSourceList from './components/mobile/ecommerce/pages/source/SourceList'
 import EcomUserCreate from './components/mobile/ecommerce/pages/user/UserCreate'
 import EcomUserList from './components/mobile/ecommerce/pages/user/UserList'
 import EcommerceSettings from './components/mobile/ecommerce/pages/settings/EcommerceSettings'
+import AgentLogin from './components/mobile/ecommerce/pages/Login'
 
 const routes = [
     //agent routes
@@ -143,6 +145,12 @@ const routes = [
         props: true,
     },
     {
+        name: 'agent.ecom.salary.list',
+        path: '/agent/:agent/my-salary',
+        component: AgentSalaryStatement,
+        props: true,
+    },
+    {
         name: 'agent.ecom.user.create',
         path: '/agent/:agent/user/create',
         component: EcomUserCreate,
@@ -171,6 +179,11 @@ const routes = [
         path: '/agent/:agent/settings',
         component: EcommerceSettings,
         props: true,
+    },
+    {
+        name: 'agent.login',
+        path: '/login',
+        component: AgentLogin,
     },
 
 ]

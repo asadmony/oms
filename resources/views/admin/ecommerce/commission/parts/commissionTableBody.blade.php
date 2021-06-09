@@ -33,6 +33,7 @@
               <a class="dropdown-item" href="{{ route('admin.sr.collections', $commission->agent) }}">Collections</a>
               <a class="dropdown-item" href="{{ route('admin.sr.returns', $commission->agent) }}">Returns</a>
               <a class="dropdown-item" href="{{ route('admin.sr.commissions', $commission->agent) }}">Commissions</a>
+              <a class="dropdown-item" href="{{ route('admin.sr.salaryList', $commission->agent) }}">Salary</a>
             </div>
           </div>
     </td>

@@ -24,35 +24,35 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="">Product Name (English)</label>
-                        <input class="form-control" type="text" name="name_en" value="">
+                        <input class="form-control" type="text" name="name_en" value="{{ old('name_en') }}">
                     </div>
                     <div class="form-group">
                         <label for="">Product Name (বাংলা)</label>
-                        <input class="form-control" type="text" name="name_bn" value="">
+                        <input class="form-control" type="text" name="name_bn" value="{{ old('name_bn') }}">
                     </div>
 
                     <div class="form-group">
                         <label for="">Excerpt (english)</label>
-                        <textarea class="form-control" type="text" name="excerpt_en"></textarea>
+                        <textarea class="form-control" type="text" name="excerpt_en">{{ old('excerpt_en') }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="">Excerpt (বাংলা)</label>
-                        <textarea class="form-control" type="text" name="excerpt_bn"></textarea>
+                        <textarea class="form-control" type="text" name="excerpt_bn">{{ old('excerpt_bn') }}</textarea>
                     </div>
 
                     <div class="form-group">
                         <label for="">Description (english)</label>
-                        <textarea rows="4" class="form-control" type="text" name="description_en"></textarea>
+                        <textarea rows="4" class="form-control" type="text" name="description_en">{{ old('description_en') }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="">Description (বাংলা)</label>
-                        <textarea rows="4" class="form-control" type="text" name="description_bn"></textarea>
+                        <textarea rows="4" class="form-control" type="text" name="description_bn">{{ old('description_bn') }}</textarea>
                     </div>
 
                     <div class="form-group">
                         <label for="">Min Order quantity</label>
                         <div class="input-group mb-3">
-                            <input class="form-control" placeholder="ex. 15" type="number" step="1" value="" name="min_order_qty">
+                            <input class="form-control" placeholder="ex. 15" type="number" step="1" value="{{ old('min_order_qty') }}" name="min_order_qty">
                             <div class="input-group-append">
                               <span class="input-group-text">unit(s)</span>
                             </div>
@@ -65,7 +65,7 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text" >&#2547;</span>
                             </div>
-                            <input class="form-control" placeholder="ex. 120" type="number" step="0.01" value="" name="purchase_price">
+                            <input class="form-control" placeholder="ex. 120" type="number" step="0.01" value="{{ old('purchase_price') }}" name="purchase_price">
                           </div>
                     </div>
 
@@ -75,7 +75,7 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text">&#2547;</span>
                             </div>
-                            <input class="form-control" placeholder="ex. 140" type="number" step="0.01" value="" name="sale_price">
+                            <input class="form-control" placeholder="ex. 140" type="number" step="0.01" value="{{ old('sale_price') }}" name="sale_price">
                           </div>
                     </div>
 
@@ -83,11 +83,11 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="">What is in the box (english)</label>
-                        <textarea class="form-control" type="text" name="what_in_box_en"></textarea>
+                        <textarea class="form-control" type="text" name="what_in_box_en">{{ old('what_in_box_en') }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="">What is in the box (বাংলা)</label>
-                        <textarea class="form-control" type="text" name="what_in_box_bn"></textarea>
+                        <textarea class="form-control" type="text" name="what_in_box_bn">{{ old('what_in_box_bn') }}</textarea>
                     </div>
                     <div class="form-group">
                         <input class="" type="checkbox" name="septic" id="septic" @if(old('septic')) checked @endif>
@@ -137,7 +137,7 @@
                         <select class="form-control" name="category" id="category">
                             <option value="" selected disabled>Select category</option>
                             @foreach ($categories as $cat)
-                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                <option value="{{ $cat->id }}" @if( old('category') == $cat->id) @endif>{{ $cat->name }}</option>
                             @endforeach
                         </select>
                     </div>

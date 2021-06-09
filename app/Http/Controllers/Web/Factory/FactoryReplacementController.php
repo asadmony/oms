@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Factory;
 
 use App\Http\Controllers\Controller;
 use App\Models\ProductReplacement;
+use App\Models\Shipment;
 use Illuminate\Http\Request;
 
 class FactoryReplacementController extends Controller
@@ -96,30 +97,32 @@ class FactoryReplacementController extends Controller
         ]);
     }
 
-    public function processSave(ProductReplacement $replace)
+    public function processSave(ProductReplacement $replace, Request $request)
     {
-        // $order->order_status = 'processing';
-        // $order->processing_at = now();
-        // $order->save();
+        dd($request->all());
+        // $replace->return_status = 'processing';
+        // $replace->processing_at = now();
+        // $replace->save();
 
         // $shipment = new Shipment;
         // // $shipment->user_id = $order->user_id;
-        // $shipment->order_id     = $order->id;
-        // $shipment->depo_id      = $order->depo_id;
-        // $shipment->distributor_id  = $order->distributor_id;
-        // $shipment->dealer_id    = $order->dealer_id;
-        // $shipment->agent_id     =  $order->agent_id;
-        // $shipment->division_id  = $order->division_id;
-        // $shipment->district_id  = $order->district_id;
-        // $shipment->upazila_id   = $order->upazila_id;
-        // $shipment->market_id    = $order->market_id  ?? null;
-        // $shipment->source_id    = $order->source_id ;
-        // $shipment->mobile       = $order->mobile  ?? null;
-        // $shipment->order_status  = $order->order_status;
-        // $shipment->processing_at  = $order->processing_at;
-        // $shipment->total_quantity  = $order->total_quantity;
+        // $shipment->order_id     = $replace->order_id;
+        // $shipment->order_id     = $replace->id;
+        // $shipment->depo_id      = $replace->depo_id;
+        // $shipment->distributor_id  = $replace->distributor_id;
+        // $shipment->dealer_id    = $replace->dealer_id;
+        // $shipment->agent_id     =  $replace->agent_id;
+        // $shipment->division_id  = $replace->division_id;
+        // $shipment->district_id  = $replace->district_id;
+        // $shipment->upazila_id   = $replace->upazila_id;
+        // $shipment->market_id    = $replace->market_id  ?? null;
+        // $shipment->source_id    = $replace->source_id ;
+        // $shipment->mobile       = $replace->mobile  ?? null;
+        // $shipment->order_status  = $replace->return_status;
+        // $shipment->processing_at  = $replace->processing_at;
+        // $shipment->total_quantity  = $replace->total_quantity;
         // $shipment->approvedby_id  = auth()->user()->id;
-        // $shipment->total_price  = $order->total_price;
+        // $shipment->total_price  = $replace->total_price;
         // $shipment->save();
         // $totalShipmentPrice = 0;
         // foreach ($order->items as $item) {

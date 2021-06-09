@@ -2,10 +2,11 @@
 <div>
 	<i class="screen-overlay"></i>
     <aside class="offcanvas" id="sidebar_left">
-	<div class="card-body bg-primary">
+	<div class="card-body bg-primary- w3-green">
 		<button class="btn-close close text-white">&times;</button>
 		<img :src="webLogo" class="img-sm rounded-circle" alt="">
-		<h6 class="text-white mt-3 mb-0">Welcome SR!</h6>
+		<h6 class="text-white mt-3 mb-0">SR: {{ sr.name.en }}!</h6>
+		<p>Balance: &#2547; {{ sr.current_income }}</p>
 	</div>
 	<nav class="nav-sidebar my-1">
 		<router-link class="btn-close" :to="{name: 'agent.ecommerce.home'}">
@@ -34,6 +35,10 @@
 			<i class="fas fa-money-check-alt"></i>
 			Collections
 		</router-link>
+		<router-link class="btn-close" :to="{name: 'agent.ecom.salary.list'}">
+			<i class="fas fa-chart-line"></i>
+			Salary Statement
+		</router-link>
 	</nav>
 	<!-- <hr>
 	<nav class="nav-sidebar my-0 py-0">
@@ -44,7 +49,7 @@
 		<a href="#"> <i class="fa fa-phone"></i> {{ sr.user.mobile }}</a>
 		<a href="#"> <i class="fa fa-envelope"></i> {{ sr.user.name }}</a>
 		<a href="#"> <i class="fa fa-map-marker"></i> {{ sr.name.en }}</a>
-
+	
 		<a @click="logout()"> <i class="fas fa-power-off"></i> Logout</a>
 	</nav>
 </aside>
@@ -64,29 +69,57 @@ export default {
 					name: 'Name',
 					mobile: '01XXXXXXXXX',
 				},
+				current_income: 0,
 			},
 			webLogo: window.location.origin+'/img/dhpl.jpg',
+			token: null,
 		}
 	},
 	created() {
-		this.getSrInfo()
+		this.token = document.querySelector('meta[name=csrf-token]').content;
+		this.getSrInfo();
+		this.trackLocation();
+	},
+	mounted() {
+		window.setInterval(() => {
+			this.trackLocation()
+		}, 60000)
 	},
 	methods: {
 		logout(){
 			axios.post(window.location.origin+'/logout').then(res => {
-				window.location.reload();
+				this.$router.push({ name: 'agent.login'});
+				// window.location.reload();
 			})
-				window.location.reload();
 		},
-		getSrInfo(){
+		thisAgent(){
 			var path = window.location.pathname
 			var splitPath = path.split("/")
-			axios.get(window.location.origin+`/api/agent/${splitPath[2]}/dashboard/info`).then(res => {
+			return splitPath[2]
+		},
+		getSrInfo(){
+			let thisAgentID = this.thisAgent()
+			axios.get(window.location.origin+`/api/agent/${thisAgentID}/dashboard/info`).then(res => {
 				if (res.status == 200) {
 					this.sr = res.data.agent
 				}
 			});
-		}
-	},
+		}, 
+		trackLocation(){
+			let thisAgentID = this.thisAgent()
+			this.$getLocation({})
+			.then(coordinates => {
+
+				axios.post(window.location.origin+`/api/agent/${thisAgentID}/set/location`,{
+					lat : coordinates.lat,
+					lng : coordinates.lng,
+				}).then(res=>{
+				})
+			})
+			.catch(err => {
+				alert('Please Allow Location to Run this App!')
+			});
+		},
+	}
 }
 </script>

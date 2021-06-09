@@ -93,6 +93,7 @@ class AdminCollectionController extends Controller
             $agent->current_collection = $agent->current_collection - $amount;
             $agent->current_sale_commission = $agent->current_sale_commission - $srCommission;
             $agent->total_collection_commission = $agent->total_collection_commission + $srCommission;
+            $agent->current_income = $agent->current_income + $srCommission;
             $agent->save();
 
             $source->total_collection = $source->total_collection + $amount;

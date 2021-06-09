@@ -266,4 +266,9 @@ class User extends Authenticatable
     {
         return $this->morphMany(User::class, 'addedby');
     }
+
+    public function srLocations()
+    {
+        return $this->hasMany(SrLocation::class, 'user_id');
+    }
 }

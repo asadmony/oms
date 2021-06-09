@@ -1,5 +1,9 @@
 @extends('admin.layouts.adminMaster')
 
+@section('title')
+{{ Str::ucfirst($type) }} Report
+@endsection
+
 @push('css')
 <style>
 tr.nowrap td{

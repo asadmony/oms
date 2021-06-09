@@ -10,7 +10,7 @@ window.Vue = require('vue').default;
 
 import router from './router'
 import store from './store'
-
+import VueGeolocation from 'vue-browser-geolocation';
 //importing filters
 import Slug from './../filters/slug';
 import Date from './../filters/date';
@@ -22,7 +22,7 @@ import vSelect from 'vue-select'
 
 Vue.filter('slug', Slug)
 Vue.filter('date', Date)
-
+Vue.use(VueGeolocation);
 Vue.use(VueSweetalert2);
 Vue.component('v-select', vSelect)
 /**

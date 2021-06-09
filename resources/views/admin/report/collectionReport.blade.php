@@ -47,6 +47,7 @@
                 <th>Date</th>
                 <th>SR</th>
                 <th>Shop</th>
+                <th>Amount</th>
                 <th>SR Com. Amount</th>
                 <th>Status</th>
             </tr>

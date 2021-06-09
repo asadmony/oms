@@ -46,6 +46,7 @@ class CreateAgentsTable extends Migration
             $table->decimal('total_collection_commission',15,2)->default(0);
             $table->decimal('current_collection',15,2)->default(0);
             $table->decimal('current_commission',15,2)->default(0);
+            $table->decimal('current_income',15,2)->default(0);
 
             // $table->decimal('lead_agent_comm',12,4)->default(0);
             //will transfer to balance when amount 100

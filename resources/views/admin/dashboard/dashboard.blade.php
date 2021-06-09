@@ -44,7 +44,7 @@ Admin Dashboard
               <div class="inner">
                 <h3 class="w3-xlarge">{{ $totalOrderCount }}</h3>
 
-                <p>Total Order</p>
+                <p>Total Order Qty.</p>
               </div>
               <div class="icon">
                 <i class="ion ion-bag"></i>
@@ -55,7 +55,7 @@ Admin Dashboard
           <!-- ./col -->
           <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-success">
+            <div class="small-box bg-danger">
               <div class="inner">
                 <h3 class="w3-xlarge"> &#2547; {{ $totalSales }}<sup style="font-size: 20px"></sup></h3>
 
@@ -70,8 +70,8 @@ Admin Dashboard
           <!-- ./col -->
           <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box w3-deep-orange">
-              <div class="inner">
+            <div class="small-box w3-orange">
+              <div class="inner text-white">
                 <h3 class="w3-xlarge"> &#2547; {{ $totalCollections }}</h3>
 
                 <p>Total Collection</p>
@@ -85,7 +85,7 @@ Admin Dashboard
           <!-- ./col -->
           <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-danger">
+            <div class="small-box bg-success ">
               <div class="inner">
                 <h3 class="w3-xlarge"> &#2547; {{ $systemBalance }}</h3>
 

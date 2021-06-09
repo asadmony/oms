@@ -1,5 +1,19 @@
 @extends('admin.layouts.adminMaster')
 
+@section('title')
+@if ($type == 'depo')
+GM
+@elseif($type == 'distributor')
+Distributor
+@elseif($type == 'dealer')
+SMO
+@elseif($type == 'agent')
+SR
+@else
+Role
+@endif 
+Update
+@endsection
 
 @push('css')
 

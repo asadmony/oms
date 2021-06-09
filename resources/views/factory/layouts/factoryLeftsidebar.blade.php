@@ -2,7 +2,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-light-primary elevation-2">
     <!-- Brand Logo -->
-    <a href="{{ url('/') }}" class="brand-link bg-primary text-center">
+    <a href="{{ url('/') }}" class="brand-link bg-primary- w3-green text-center">
       {{-- <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8"> --}}
            <img class="" style="max-width: 80px; max-height:80px" src="{{ asset('img/dhpl.jpg') }}" alt="{{ env('APP_NAME') }}">
@@ -125,6 +125,12 @@
                 <a href="{{ route('factory.orders.shipped') }}" class="nav-link {{ session('lsbsm') == 'shipped' ? ' active ' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>{{ __('Shipped Orders') }}</p>
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a href="{{ route('factory.orders.delivered') }}" class="nav-link {{ session('lsbsm') == 'delivered' ? ' active ' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>{{ __('Delivered Orders') }}</p>
                 </a>
               </li>
               <li class="nav-item ">

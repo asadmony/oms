@@ -1,5 +1,9 @@
 @extends('admin.layouts.adminMaster')
 
+@section('title')
+Payment Collection List
+@endsection
+
 @push('css')
 <style>
 

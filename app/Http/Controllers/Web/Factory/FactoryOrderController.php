@@ -244,6 +244,14 @@ class FactoryOrderController extends Controller
             'orders' => $orders,
         ]);
     }
+    public function ordersDelivered(Shipment $order)
+    {
+        menuSubmenu('orders', 'delivered');
+        $orders = $order->whereIn('order_status', ['delivered', 'collected'])->latest()->paginate(20);
+        return view('factory.order.delivered',[
+            'orders' => $orders,
+        ]);
+    }
     public function ordersIncomplete(EcommerceOrder $order)
     {
         menuSubmenu('orders', 'incomplete');

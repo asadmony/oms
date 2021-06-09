@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Ecommerce\EcommercePaymentCollection;
 use App\Models\Role\Agent;
 use App\Models\SaleCommission;
+use App\Models\SrLocation;
 use App\Models\User;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -138,5 +140,34 @@ class AgentDashboardController extends Controller
             'current_month_collection' => $currentMonthCollection,
         ];
         return response()->json($data, 200);
+    }
+
+    public function setAgentLocation(Agent $agent, SrLocation $srLocation, Request $request, Client $client)
+    {
+        if ($agent->user_id == auth()->user()->id) {
+            $srLocation->user_id = auth()->user()->id;
+            $srLocation->agent_id = $agent->id;
+            $srLocation->lat = $request->lat;
+            $srLocation->lng = $request->lng;
+            $srLocation->save();
+            $url = url("http://poi.18gps.net/poi?lat={$request->lat}&lon={$request->lng}");
+            $r = $client->request('GET', $url);
+            $result = $r->getBody()->getContents();
+            $srLocation->location = $result ?? '';
+            $srLocation->save();
+            
+            $agent->srLocations()->whereMonth('created_at', '<', now()->subMonths(2)->month)->delete();
+        }else{
+            abort(401);
+        }
+    }
+    public function getAgentSalary(Agent $agent)
+    {
+        if ($agent->user_id != auth()->user()->id) {
+            abort(401);
+        }else{
+            $data = $agent->salaries()->latest()->paginate(50);
+            return response()->json($data, 200);
+        }
     }
 }

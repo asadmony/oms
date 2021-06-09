@@ -58,12 +58,12 @@
 
             <main class="">
                 <div class="card p-0 m-0">
-                    <div class="card-header text-8 px-5" style="background-color: #283291">
+                    <div class="card-header text-8 px-5" style="background-color: #38B749">
                         <a class="text-white" href="/">
 							<img class="w3-round-large" style="max-width: 80px; max-height:80px" src="{{ asset('img/dhpl.jpg') }}" alt="">
 						</a>
                     </div>
-					<div class=" py-4" style="background-color: #38B749">
+					<div class=" py-4" style="background-color: #283291 ">
 
 					</div>
                 @yield('content')

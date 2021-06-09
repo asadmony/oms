@@ -39,15 +39,21 @@ class AgentDashboardController extends Controller
     {
         if ($agent->user_id != auth()->user()->id){
             abort(401);
+        }elseif($agent->active == 0){
+            return view('mobile.agent.inactiveAgentIndex',[
+                'agent' => $agent,
+            ]);
+        }else{
+            $agentship = $agent->load('dealer','division','district','upazila', 'markets');
+            menuSubmenu('dashboard', 'dashboard');
+            
+            return view('mobile.agent.index',[
+                'agent' => $agentship,
+            ]);
+            return view($this->device . 'agent.ecommerce.index',[
+                'agent' => $agentship,
+            ]);
         }
-        $agentship = $agent->load('dealer','division','district','upazila', 'markets');
-        menuSubmenu('dashboard', 'dashboard');
         
-        return view('mobile.agent.index',[
-            'agent' => $agentship,
-        ]);
-        return view($this->device . 'agent.ecommerce.index',[
-            'agent' => $agentship,
-        ]);
     }
 }

@@ -1,5 +1,9 @@
 @extends('admin.layouts.adminMaster')
 
+@section('title')
+Sales Commissions List
+@endsection
+
 @push('css')
 <style>
 tr.nowrap td {

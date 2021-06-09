@@ -5,36 +5,36 @@
 
             <div class="row">
                 <div class="col-md-6 p-2">
-                    <div class="card w3-blue">
-                        <div class="card-body">
+                    <div class="card color">
+                        <div class="card-body w3-text-white">
                             Monthly Target : &#2547; {{ sr.monthly_target }}
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 p-2">
-                    <div class="card w3-blue">
-                        <div class="card-body">
+                    <div class="card w3-deep-orange">
+                        <div class="card-body w3-text-white">
                             Current Month Sale : &#2547; {{ sr.monthly_target }}
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 p-2">
-                    <div class="card w3-blue">
-                        <div class="card-body">
+                    <div class="card w3-purple">
+                        <div class="card-body w3-text-white">
                             Current Month Collection : &#2547; {{ sr.monthly_target }}
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 p-2">
-                    <div class="card w3-blue">
-                        <div class="card-body">
+                    <div class="card w3-red">
+                        <div class="card-body w3-text-white">
                             Total Sales : &#2547; {{ sr.total_sale }}
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 p-2">
-                    <div class="card w3-blue">
-                        <div class="card-body">
+                    <div class="card w3-teal">
+                        <div class="card-body w3-text-white">
                             Total Collection : &#2547; {{ sr.total_collection }}
                         </div>
                     </div>
@@ -43,6 +43,11 @@
         </div>
     </div>
 </template>
+<style scoped>
+.color{
+    background-color: #283291;
+}
+</style>
 <script>
 import eventBus from './../../../../event-bus'
 export default {

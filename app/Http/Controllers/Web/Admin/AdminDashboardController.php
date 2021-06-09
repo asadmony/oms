@@ -56,33 +56,22 @@ class AdminDashboardController extends Controller
                 ],
             ];
 
-        $thisMonthSale      = SaleCommission::whereMonth('created_at', now()->month)->sum('total_price');
+        $thisMonthSale      = SaleCommission::whereMonth('created_at', now()->month)->sum('collection_amount');
         $thisMonthCollection = EcommercePaymentCollection::whereMonth('created_at', now()->month)->sum('paid_amount');
-        $prev1MonthSale     = SaleCommission::whereMonth('created_at', now()->subMonths(1)->month)->sum('total_price');
+        $prev1MonthSale     = SaleCommission::whereMonth('created_at', now()->subMonths(1)->month)->sum('collection_amount');
         $prev1MonthCollection = EcommercePaymentCollection::whereMonth('created_at', now()->subMonths(1)->month)->sum('paid_amount');
-        $prev2MonthSale     = SaleCommission::whereMonth('created_at', now()->subMonths(2)->month)->sum('total_price');
+        $prev2MonthSale     = SaleCommission::whereMonth('created_at', now()->subMonths(2)->month)->sum('collection_amount');
         $prev2MonthCollection = EcommercePaymentCollection::whereMonth('created_at', now()->subMonths(2)->month)->sum('paid_amount');
-        $prev3MonthSale     = SaleCommission::whereMonth('created_at', now()->subMonths(3)->month)->sum('total_price');
+        $prev3MonthSale     = SaleCommission::whereMonth('created_at', now()->subMonths(3)->month)->sum('collection_amount');
         $prev3MonthCollection = EcommercePaymentCollection::whereMonth('created_at', now()->subMonths(3)->month)->sum('paid_amount');
-        $prev4MonthSale     = SaleCommission::whereMonth('created_at', now()->subMonths(4)->month)->sum('total_price');
+        $prev4MonthSale     = SaleCommission::whereMonth('created_at', now()->subMonths(4)->month)->sum('collection_amount');
         $prev4MonthCollection = EcommercePaymentCollection::whereMonth('created_at', now()->subMonths(4)->month)->sum('paid_amount');
-        $prev5MonthSale     = SaleCommission::whereMonth('created_at', now()->subMonths(5)->month)->sum('total_price');
+        $prev5MonthSale     = SaleCommission::whereMonth('created_at', now()->subMonths(5)->month)->sum('collection_amount');
         $prev5MonthCollection = EcommercePaymentCollection::whereMonth('created_at', now()->subMonths(5)->month)->sum('paid_amount');
 
         $paymentChartData = [
             'labels'  => [now()->subMonths(5)->format('M'),now()->subMonths(4)->format('M'),now()->subMonths(3)->format('M'),now()->subMonths(2)->format('M'), now()->subMonths(1)->format('M'), now()->format('M')],
             'datasets' => [
-                [
-                'label'               => 'Monthly Sales',
-                'backgroundColor'     => 'rgba(60,141,188,0.9)',
-                'borderColor'         => 'rgba(60,141,188,0.8)',
-                'pointRadius'         => false,
-                'pointColor'          => '#3b8bba',
-                'pointStrokeColor'    => 'rgba(60,141,188,1)',
-                'pointHighlightFill'  => '#fff',
-                'pointHighlightStroke'=> 'rgba(60,141,188,1)',
-                'data'                => [ $prev5MonthSale, $prev4MonthSale, $prev3MonthSale, $prev2MonthSale, $prev1MonthSale,$thisMonthSale]
-                ],
                 [
                 'label'               => 'Monthly Payment Collection',
                 'backgroundColor'     => 'rgba(210, 214, 222, 1)',
@@ -93,6 +82,17 @@ class AdminDashboardController extends Controller
                 'pointHighlightFill'  => '#fff',
                 'pointHighlightStroke'=> 'rgba(220,220,220,1)',
                 'data'                => [ $prev5MonthCollection, $prev4MonthCollection, $prev3MonthCollection, $prev2MonthCollection, $prev1MonthCollection,$thisMonthCollection]
+                ],
+                [
+                'label'               => 'Monthly Sales',
+                'backgroundColor'     => 'rgba(60,141,188,0.9)',
+                'borderColor'         => 'rgba(60,141,188,0.8)',
+                'pointRadius'         => false,
+                'pointColor'          => '#3b8bba',
+                'pointStrokeColor'    => 'rgba(60,141,188,1)',
+                'pointHighlightFill'  => '#fff',
+                'pointHighlightStroke'=> 'rgba(60,141,188,1)',
+                'data'                => [ $prev5MonthSale, $prev4MonthSale, $prev3MonthSale, $prev2MonthSale, $prev1MonthSale,$thisMonthSale]
                 ],
             ],
         ];

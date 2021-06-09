@@ -17,6 +17,7 @@ class CreateShipmentsTable extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->bigInteger('order_id')->unsigned()->nullable();
+            $table->bigInteger('replacement_id')->unsigned()->nullable();
             $table->bigInteger('depo_id')->unsigned()->nullable();
 
             $table->bigInteger('distributor_id')->unsigned()->nullable();
@@ -68,6 +69,9 @@ class CreateShipmentsTable extends Migration
 
             $table->string('payment_status')->default('unpaid');
             //unpaid, partial, paid
+
+            $table->string('type')->nullable();
+            //order, replacement
 
             $table->decimal('total_quantity',10,2)->default(0);
             $table->decimal('total_price',10,2)->default(0);

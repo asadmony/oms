@@ -16,6 +16,7 @@
                             <th>Date</th>
                             <th>Shop</th>
                             <th>Amount</th>
+                            <th>Commission</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -25,6 +26,7 @@
                             <td>{{ item.trans_date | date }}</td>
                             <td>{{ item.source.name.en }} ({{ item.source.mobile }})</td>
                             <td>{{ item.paid_amount }}</td>
+                            <td>{{ item.sr_commission_amount }}</td>
                             <td>{{ item.status }}</td>
                         </tr>
                     </tbody>

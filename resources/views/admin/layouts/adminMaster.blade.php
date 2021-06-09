@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="developer" content="Md. Asaduzzaman 01753007145">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">

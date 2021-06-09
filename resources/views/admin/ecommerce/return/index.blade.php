@@ -1,5 +1,9 @@
 @extends('admin.layouts.adminMaster')
 
+@section('title')
+    Return List
+@endsection
+
 @push('css')
 <style>
 tr.nowrap td{

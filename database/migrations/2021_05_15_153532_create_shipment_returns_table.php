@@ -45,6 +45,7 @@ class CreateShipmentReturnsTable extends Migration
 
             $table->timestamp('return_at')->nullable();
             $table->timestamp('approved_at')->nullable();
+            $table->timestamp('processing_at')->nullable();
             $table->timestamp('shipped_at')->nullable();
             $table->timestamp('received_at')->nullable();
 

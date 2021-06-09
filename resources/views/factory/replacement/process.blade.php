@@ -52,13 +52,13 @@ Replacement # {{ $replace->id }}
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item->product_id }}</td>
                                             <td>
-                                                <img  style="max-width: 200px;max-height: 100px;" src="{{ $item->product->feature_img }}" alt="">
+                                                <img style="max-width: 100px;max-height: 100px; margin: auto;" src="{{ $item->product->feature_img }}" alt="">
                                             </td>
                                             <td> {{ $item->product->name }}</td>
                                             <td>{{ $item->total_shipped_quantity }}</td>
                                             <td>{{ $item->replace_quantity }}</td>
                                             <td>
-                                                <input type="number" disabled class="form-control" name="process_qty_{{ $item->id }}" value="{{ ($item->replace_quantity) }}" required>
+                                                <input type="number" class="form-control" name="process_qty_{{ $item->id }}" value="{{ ($item->replace_quantity) }}" readonly required>
                                             </td>
                                         </tr>
                                     @endforeach

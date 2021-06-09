@@ -18,6 +18,8 @@
             <a class="dropdown-item" href="{{ route('admin.sr.collections', $admin) }}">Collections</a>
             <a class="dropdown-item" href="{{ route('admin.sr.returns', $admin) }}">Returns</a>
             <a class="dropdown-item" href="{{ route('admin.sr.commissions', $admin) }}">Commissions</a>
+            <a class="dropdown-item" href="{{ route('admin.sr.locations', $admin) }}">Locations</a>
+            <a class="dropdown-item" href="{{ route('admin.sr.salaryList', $admin) }}">Salary</a>
             </div>
         </div>
         @else

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Admin\Role;
 
 use App\Http\Controllers\Controller;
 use App\Models\Role\Agent;
+use App\Models\SrSalary;
 use Illuminate\Http\Request;
 
 class AdminSrController extends Controller
@@ -125,4 +126,46 @@ class AdminSrController extends Controller
             'commissions' => $commissions,
         ]);
     }
+    public function locationList(Agent $agent)
+    {
+        $locations = $agent->srLocations()->latest()->paginate(100);
+        return view('admin.roles.sr.locationList', [
+            'agent' => $agent,
+            'locations' => $locations,
+        ]);
+    }
+    public function salaryList(Agent $agent)
+    {
+        $salaries = $agent->salaries()->latest()->paginate(100);
+        return view('admin.roles.sr.salaryList', [
+            'agent' => $agent,
+            'salaries' => $salaries,
+        ]);
+    }
+
+    public function salaryPay(Agent $agent, Request $request)
+    {
+        $this->validate($request, [
+            'payment' => 'required|numeric',
+        ]);
+
+        if ($request->payment > $agent->current_income || $request->payment < 1) {
+            return redirect()->back()->with('error', 'Payment Amount is not correct.');
+        }else{
+            $srSalary = new SrSalary;
+            $srSalary->agent_id = $agent->id;
+            $srSalary->previous_income = $agent->current_income;
+            $srSalary->paid_amount = $request->payment;
+            $srSalary->current_income = ($agent->current_income - $request->payment);
+            $srSalary->addedby_id = auth()->user()->id;
+            $srSalary->trans_date = now();
+            $srSalary->save();
+
+            $agent->current_income = $agent->current_income - $request->payment;
+            $agent->save();
+
+            return redirect()->back()->with('success', $agent->name.' is paid BDT '.$request->payment);
+        }
+    }
+    
 }

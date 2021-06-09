@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Ecommerce\EcommerceOrder;
 use App\Models\Ecommerce\EcommerceSource;
 use App\Models\Role\Agent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,4 +26,16 @@ class ShipmentReturn extends Model
     {
         return $this->belongsTo(EcommerceSource::class, 'source_id');
     }
+
+    public function order()
+    {
+        return $this->belongsTo(EcommerceOrder::class, 'order_id');
+    }
+
+    public function shipment()
+    {
+        return $this->belongsTo(Shipment::class, 'shipment_id');
+    }
+
+    
 }

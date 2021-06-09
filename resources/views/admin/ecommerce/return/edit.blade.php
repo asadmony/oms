@@ -1,5 +1,9 @@
 @extends('admin.layouts.adminMaster')
 
+@section('title')
+Shipment Return # {{ $return->id }}
+@endsection
+
 @push('css')
 <style>
 

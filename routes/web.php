@@ -48,6 +48,7 @@ Route::prefix('api')->middleware(['auth'])->namespace('\App\Http\Controllers\Api
 });
 // ecommerce routes
 Route::prefix('api')->namespace('\App\Http\Controllers\Api\Ecommerce')->group(function () {
+    
     Route::get('/products', 'IndexController@index');
     Route::get('/products/recently-viewed', 'IndexController@recentlyViewedProducts');
     Route::get('/products/best-deals', 'IndexController@recentlyViewedProducts');
@@ -71,6 +72,8 @@ Route::prefix('api/agent')->namespace('\App\Http\Controllers\Api\Agent')->group(
     Route::get('agentships/get', 'AgentDashboardController@getAgentships');
     Route::get('/{agent}/dashboard/info', 'AgentDashboardController@getAgentDashboardInfo');
     Route::post('/{agent}/user/save', 'AgentDashboardController@saveUser');
+    Route::post('/{agent}/set/location', 'AgentDashboardController@setAgentLocation');
+    Route::post('/{agent}/my-salaries', 'AgentDashboardController@getAgentSalary');
     Route::prefix('{agent}/ecommerce')->group(function () {
         Route::resource('product', Ecommerce\AgentProductController::class);
         Route::get('/orders', 'Ecommerce\AgentOrderController@index');
@@ -222,6 +225,18 @@ Route::group(['middleware' => ['myrole:admin', 'auth'], 'prefix' => 'admin'], fu
     Route::get('role/sr/{agent}/commissions', [
         'uses' => 'Admin\Role\AdminSrController@commissionList',
         'as' => 'admin.sr.commissions',
+    ]);
+    Route::get('role/sr/{agent}/locations', [
+        'uses' => 'Admin\Role\AdminSrController@locationList',
+        'as' => 'admin.sr.locations',
+    ]);
+    Route::get('role/sr/{agent}/salaries', [
+        'uses' => 'Admin\Role\AdminSrController@salaryList',
+        'as' => 'admin.sr.salaryList',
+    ]);
+    Route::post('role/sr/{agent}/salary/pay', [
+        'uses' => 'Admin\Role\AdminSrController@salaryPay',
+        'as' => 'admin.sr.salary.pay',
     ]);
 
     Route::post('payment-add-to-role/type/{type}/role/{role}', [
@@ -462,6 +477,10 @@ Route::group(['middleware' => ['myrole:factory', 'auth'], 'prefix' => 'factory']
     Route::get('/orders/shipped', [
         'uses' => 'Factory\FactoryOrderController@ordersShipped',
         'as' => 'factory.orders.shipped',
+    ]);
+    Route::get('/orders/delivered', [
+        'uses' => 'Factory\FactoryOrderController@ordersDelivered',
+        'as' => 'factory.orders.delivered',
     ]);
     Route::get('/orders/incomplete', [
         'uses' => 'Factory\FactoryOrderController@ordersIncomplete',
