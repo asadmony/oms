@@ -319,6 +319,18 @@
                   Product Sales Report
                 </a>
               </li>
+              <li class="nav-item ">
+                <a href="{{ route('admin.report', 'sr') }}" class="nav-link {{ session('lsbsm') == 'sr' ? ' active ' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  SR Report
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a href="{{ route('admin.report', 'shop') }}" class="nav-link {{ session('lsbsm') == 'shop' ? ' active ' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  Shop Report
+                </a>
+              </li>
 
             </ul>
           </li>

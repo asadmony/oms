@@ -9,33 +9,33 @@
 		<p>Balance: &#2547; {{ sr.current_income }}</p>
 	</div>
 	<nav class="nav-sidebar my-1">
-		<router-link class="btn-close" :to="{name: 'agent.ecommerce.home'}">
+		<router-link class="btn-close" v-if="loggedIn" :to="{name: 'agent.ecommerce.home'}">
 			<i class="fa fa-home"></i> Home
 		</router-link>
-		<!-- <router-link class="btn-close" :to="{name: 'agent.ecom.user.list'}">
+		<!-- <router-link class="btn-close" v-if="loggedIn" :to="{name: 'agent.ecom.user.list'}">
 			<i class="fas fa-users"></i>
 			Amar listed Customers
 		</router-link> -->
-		<router-link class="btn-close" :to="{name: 'agent.ecom.source.list'}">
+		<router-link class="btn-close" v-if="loggedIn" :to="{name: 'agent.ecom.source.list'}">
 			<i class="fas fa-industry"></i>
 			Shops
 		</router-link>
-		<router-link class="btn-close" :to="{name: 'agent.ecommerce.order.list'}">
+		<router-link class="btn-close" v-if="loggedIn" :to="{name: 'agent.ecommerce.order.list'}">
 			<i class="fa fa-cube"></i>
 			Orders
 		</router-link>
-		<router-link class="btn-close" :to="{name: 'agent.ecom.return.list'}">
+		<router-link class="btn-close" v-if="loggedIn" :to="{name: 'agent.ecom.return.list'}">
 			<i class="fas fa-truck-loading"></i>
 			Returns
 		</router-link>
-		<!-- <router-link class="btn-close" :to="{name: 'agent.ecommerce.product.list'}">
+		<!-- <router-link class="btn-close" v-if="loggedIn" :to="{name: 'agent.ecommerce.product.list'}">
 			<i class="fa fa-th"></i> Products
 		</router-link> -->
-		<router-link class="btn-close" :to="{name: 'agent.ecom.collection.list'}">
+		<router-link class="btn-close" v-if="loggedIn" :to="{name: 'agent.ecom.collection.list'}">
 			<i class="fas fa-money-check-alt"></i>
 			Collections
 		</router-link>
-		<router-link class="btn-close" :to="{name: 'agent.ecom.salary.list'}">
+		<router-link class="btn-close" v-if="loggedIn" :to="{name: 'agent.ecom.salary.list'}">
 			<i class="fas fa-chart-line"></i>
 			Salary Statement
 		</router-link>
@@ -50,7 +50,7 @@
 		<a href="#"> <i class="fa fa-envelope"></i> {{ sr.user.name }}</a>
 		<a href="#"> <i class="fa fa-map-marker"></i> {{ sr.name.en }}</a>
 	
-		<a @click="logout()"> <i class="fas fa-power-off"></i> Logout</a>
+		<a @click="logout()" v-if="loggedIn"> <i class="fas fa-power-off"></i> Logout</a>
 	</nav>
 </aside>
 </div>
@@ -73,6 +73,7 @@ export default {
 			},
 			webLogo: window.location.origin+'/img/dhpl.jpg',
 			token: null,
+			loggedIn: true,
 		}
 	},
 	created() {
@@ -88,8 +89,9 @@ export default {
 	methods: {
 		logout(){
 			axios.post(window.location.origin+'/logout').then(res => {
+				this.loggedIn = false
 				this.$router.push({ name: 'agent.login'});
-				// window.location.reload();
+				window.location.reload();
 			})
 		},
 		thisAgent(){
@@ -117,7 +119,8 @@ export default {
 				})
 			})
 			.catch(err => {
-				alert('Please Allow Location to Run this App!')
+				alert('Please clear browser data and Allow Location to Run this App! Otherwise it will logout.')
+				this.logout()
 			});
 		},
 	}

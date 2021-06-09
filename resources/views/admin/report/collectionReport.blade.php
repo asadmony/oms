@@ -1,4 +1,4 @@
-<div class="table-responsive" style="min-height: 75vh;">
+<div class="table-responsive" style="min-height: 30vh;">
     <table class="table table-bordered table-sm table-striped">
         <thead>
             <tr>

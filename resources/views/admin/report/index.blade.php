@@ -103,23 +103,46 @@ tr.nowrap td{
             
         </form>
         
-
+        <div class="container">
+            @if (!isset($input['time']) && !isset($input['status']) && !isset($input['sr']) && ! isset($input['shop']) && !isset($input['from']) && !isset($input['to']) && !isset($input['products']))
+                **Please select some parameter then search for report.
+            @endif
+        </div>
     </div>
 </div>
 
 <div class="card">
     <div class="h4 card-header">
-        {{ Str::ucfirst($type) }} List
+        {{ Str::ucfirst($type) }} Report
     </div>
     <div class="card-header">
         @if ($type == 'order')
-            @include('admin.report.orderReport')
+            @if(isset($input['time']) || isset($input['status']) || isset($input['sr']) || isset($input['shop']) || isset($input['from']) || isset($input['to']) || isset($input['products']))
+                @include('admin.report.orderReport')
+            @endif
         @elseif($type == 'collection')
+            @if (isset($input['time']) || isset($input['status']) || isset($input['sr']) || isset($input['shop']) || isset($input['from']) || isset($input['to']) || isset($input['products']))
             @include('admin.report.collectionReport')
+                
+            @endif
         @elseif($type == 'return')
+            @if (isset($input['time']) || isset($input['status']) || isset($input['sr']) || isset($input['shop']) || isset($input['from']) || isset($input['to']) || isset($input['products']))
             @include('admin.report.returnReport')
+                
+            @endif
         @elseif($type == 'product')
+            @if (isset($input['time']) || isset($input['status']) || isset($input['sr']) || isset($input['shop']) || isset($input['from']) || isset($input['to']) || isset($input['products']))
             @include('admin.report.productSalesReport')
+                
+            @endif
+        @elseif($type == 'sr')
+            @if (isset($input['sr']))
+                @include('admin.report.srReport')
+            @endif
+        @elseif($type == 'shop')
+            @if (isset($input['shop']))
+                @include('admin.report.shopReport')
+            @endif
         @endif
     </div>
 </div>

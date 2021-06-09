@@ -167,6 +167,134 @@ class AdminReportController extends Controller
                 'allProducts' => $allProducts,
                 'input' => $request->all(),
             ]);
+        }elseif($type == 'sr'){
+            $agents = Agent::whereIn('id',$request->sr ?? [])->get();
+            $collections = EcommercePaymentCollection::where(function ($query) use ($request)
+            {
+                if ($request->time == 'today') {
+                    $query->where('trans_date', '<=', now())->where('trans_date', '>=', now()->subDays(1));
+                }elseif($request->time == 'yesterday'){
+                    $query->where('trans_date', '>=', now()->subDays(1));
+                }elseif($request->time == 'last_7_days'){
+                    $query->where('trans_date', '>=', now()->subDays(7));
+                }elseif($request->time == 'last_month'){
+                    $query->where('trans_date', '>=', now()->subDays(30));
+                }elseif ($request->from && $request->to) {
+                    $query->where('trans_date', '<=', now()->parse($request->to))->where('trans_date', '>=', now()->parse($request->from));
+                }elseif($request->from){
+                    $query->where('trans_date', '>=', now()->parse($request->from));
+                }elseif($request->to){
+                    $query->where('trans_date', '<=', now()->parse($request->to));
+                }else{
+                }
+                if ($request->sr) {
+                    $query->whereIn('agent_id', $request->sr);
+                }
+                if ($request->shop) {
+                    $query->whereIn('source_id', $request->shop);
+                }
+            })->latest()->get();
+            $products = EcommerceProduct::where('status', 'published')->where(function ($query) use ($request){
+                if ($request->products) {
+                    $query->whereIn('id', $request->products);
+                }
+            })->whereHas('sales', function ($query) use ($request){
+                if ($request->time == 'today') {
+                    $query->where('created_at', '<=', now())->where('created_at', '>=', now()->subDays(1));
+                }elseif($request->time == 'yesterday'){
+                    $query->where('created_at', '>=', now()->subDays(1));
+                }elseif($request->time == 'last_7_days'){
+                    $query->where('created_at', '>=', now()->subDays(7));
+                }elseif($request->time == 'last_month'){
+                    $query->where('created_at', '>=', now()->subDays(30));
+                }elseif ($request->from && $request->to) {
+                    $query->where('created_at', '<=', now()->parse($request->to))->where('created_at', '>=', now()->parse($request->from));
+                }elseif($request->from){
+                    $query->where('created_at', '>=', now()->parse($request->from));
+                }elseif($request->to){
+                    $query->where('created_at', '<=', now()->parse($request->to));
+                }else{
+                }
+                if ($request->sr) {
+                    $query->whereIn('agent_id', $request->sr);
+                }
+                if ($request->shop) {
+                    $query->whereIn('source_id', $request->shop);
+                }
+            })->latest()->get()->load('sales', 'returns');
+            return view('admin.report.index',[
+                'type' => $type,
+                'srs' => $srs,
+                'agents' => $agents,
+                'shops' => $shops,
+                'collections' => $collections,
+                'products' => $products,
+                'input' => $request->all(),
+            ]);
+        }elseif($type == 'shop'){
+            $sources = EcommerceSource::whereIn('id',$request->shop ?? [])->get();
+            $collections = EcommercePaymentCollection::where(function ($query) use ($request)
+            {
+                if ($request->time == 'today') {
+                    $query->where('trans_date', '<=', now())->where('trans_date', '>=', now()->subDays(1));
+                }elseif($request->time == 'yesterday'){
+                    $query->where('trans_date', '>=', now()->subDays(1));
+                }elseif($request->time == 'last_7_days'){
+                    $query->where('trans_date', '>=', now()->subDays(7));
+                }elseif($request->time == 'last_month'){
+                    $query->where('trans_date', '>=', now()->subDays(30));
+                }elseif ($request->from && $request->to) {
+                    $query->where('trans_date', '<=', now()->parse($request->to))->where('trans_date', '>=', now()->parse($request->from));
+                }elseif($request->from){
+                    $query->where('trans_date', '>=', now()->parse($request->from));
+                }elseif($request->to){
+                    $query->where('trans_date', '<=', now()->parse($request->to));
+                }else{
+                }
+                if ($request->sr) {
+                    $query->whereIn('agent_id', $request->sr);
+                }
+                if ($request->shop) {
+                    $query->whereIn('source_id', $request->shop);
+                }
+            })->latest()->get();
+            $products = EcommerceProduct::where('status', 'published')->where(function ($query) use ($request){
+                if ($request->products) {
+                    $query->whereIn('id', $request->products);
+                }
+            })->whereHas('sales', function ($query) use ($request){
+                if ($request->time == 'today') {
+                    $query->where('created_at', '<=', now())->where('created_at', '>=', now()->subDays(1));
+                }elseif($request->time == 'yesterday'){
+                    $query->where('created_at', '>=', now()->subDays(1));
+                }elseif($request->time == 'last_7_days'){
+                    $query->where('created_at', '>=', now()->subDays(7));
+                }elseif($request->time == 'last_month'){
+                    $query->where('created_at', '>=', now()->subDays(30));
+                }elseif ($request->from && $request->to) {
+                    $query->where('created_at', '<=', now()->parse($request->to))->where('created_at', '>=', now()->parse($request->from));
+                }elseif($request->from){
+                    $query->where('created_at', '>=', now()->parse($request->from));
+                }elseif($request->to){
+                    $query->where('created_at', '<=', now()->parse($request->to));
+                }else{
+                }
+                if ($request->sr) {
+                    $query->whereIn('agent_id', $request->sr);
+                }
+                if ($request->shop) {
+                    $query->whereIn('source_id', $request->shop);
+                }
+            })->latest()->get()->load('sales', 'returns');
+            return view('admin.report.index',[
+                'type' => $type,
+                'srs' => $srs,
+                'sources' => $sources,
+                'shops' => $shops,
+                'collections' => $collections,
+                'products' => $products,
+                'input' => $request->all(),
+            ]);
         }else{
             return redirect()->back();
         }
